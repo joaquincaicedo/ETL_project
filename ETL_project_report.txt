@@ -1,0 +1,9 @@
+ETL project report 
+
+The goal of the project was to extract data on Mexico's policy rate and behavior of commercial banks credit to the private sector to show that increases/decreases in the policy rate led to a slowdown/increase in the pace of accumulation of outstanding loans. 
+
+We extracted data from Banxico's API for both rates and loans. We downladed the csv from teh National Banking Commission, but found data incomplete and for a very narrow range of dates. We thus used Banxico's data, which we had to sort through to find the most adecuate to our purpose. Data on loans could encompass consumer, corporate or mortgage loans, the same as rates; however, we found little correlation in mortage data with the policy rate, for example, due to the structural changes that followed the 2013 financial reform. Hence our choice for the most aggregated loan data, as well as the most representative rate (that of which most other loan rates feed on: the policy rate). Banxico's API yielded data in JSON format, which we processed through the json module in python. 
+
+We then transformed the data from json format into pandas dataframes in order to simplify its cleansing, which wasn't too demanding, as both data sets had a similar structure (range, frequency). 
+
+Finally, we appended the data into SQLPostgres tables previosuly created in order to seamlessly perform joins and present the final joined data set in an easily-read format. The results were not what we expected, as there was no strong (negative) correlation between the two data series. We attribute this to a handful of factors: policy rates were presented in nominal terms, which is not optimal; similarly, we used nominal loans, when using rates of annual change in loans expressed in real terms would have likely yielded much better results. 
